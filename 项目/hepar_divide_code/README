@@ -1,0 +1,25 @@
+1.data数据集
+origin:原始数据和标签
+resized:缩放后的数据和标签
+crop_foreground:裁剪前景的标签
+
+2.训练逻辑
+一阶段方法:
+输入图像是orgin,可以选择crop或resized的预处理。
+
+二阶段方法:
+coarse:提前resized好，选择resized文件夹，预处理选择None
+fine:其他裁剪好，选择crop_foreground文件夹，预处理一般选择crop
+
+
+3.推理逻辑
+一阶段方法:
+选择predict_one_stage.py; 输入是image ; 输出是predict_out
+
+二阶段方法:
+coarse推理: 选择predict_one_stage.py; 输入是resized_image ; 输出是predict_out_resized
+fine推理: 选择predict_one_stage.py; 输入是foreground_image ; 输出是predict_out_foreground
+coarse+fine推理:选择predict_two_stage.py
+
+4.训练二/多分类:
+多分类:都是计算的平均dice,对于每一类的dice需要在DSC_HD中输出
